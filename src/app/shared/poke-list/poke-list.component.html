@@ -1,18 +1,26 @@
-<div class="listagem">
-  <a *ngFor="let n of [1, 2, 3]" href="" class="pokemon" >
-    <section class="pokemon__status">
-      <h2>
-        Bulbasaur
-      </h2>
-      <ul>
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </section>
+<app-poke-search (emmitSearch)="getSearch($event)"></app-poke-search>
 
-    <section class="pokemon__image">
-      <img src="assets/pokemon.png" alt="pokemon">
-    </section>
-  </a>
+<section class="listagem">
+  <ng-template ngFor let-pokemon [ngForOf]="filteredPokemons">
+    <a [routerLink]="['details', pokemon?.status.id]"
+      *ngIf="pokemon.status" href="" class="pokemon">
+      <section class="pokemon__status">
+        <h2>
+          {{pokemon.name}}
+        </h2>
+        <ul>
+          <li *ngFor="let pokemonType of pokemon?.status?.types">
+            {{pokemonType.type.name}}
+          </li>
+        </ul>
+      </section>
 
-</div>
+      <section class="pokemon__image">
+        <img
+          [src]="pokemon?.status?.sprites.other['official-artwork'].front_default"
+          [alt]="pokemon?.name">
+      </section>
+    </a>
+  </ng-template>
+
+</section>
